@@ -12,7 +12,7 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 import {Pokemon} from '../types/pokemon';
 import {PagedResponse} from "../types/paging.ts";
 
-const ICON_PLACEHOLDER = 'https://img.pokemondb.net/sprites/items/poke-ball.png';
+const ICON_PLACEHOLDER = 'poke_ball.svg';
 
 const fetchPokemon = async ({
                                 pageParam = 1,
