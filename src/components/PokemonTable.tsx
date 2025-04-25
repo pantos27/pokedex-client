@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo, ChangeEvent } from 'react';
+import {useCallback, useEffect, useState, useMemo, ChangeEvent} from 'react';
 import {
     createColumnHelper,
     flexRender,
@@ -98,7 +98,7 @@ const PokemonTable = () => {
             }),
             columnHelper.accessor('number', {
                 header: 'Number',
-                size: 100,
+                size: 120,
                 cell: info => info.getValue(),
             }),
             columnHelper.accessor('type_one', {
@@ -196,6 +196,19 @@ const PokemonTable = () => {
         }
     }, [handleScroll, parentRef]);
 
+    const loadingText = useMemo(() =>
+            <div className="loading">Loading Pokémon data...</div>
+        , []);
+
+    const errorText = useMemo(() =>
+            <div className="error">Error loading Pokémon data</div>
+        , []);
+
+    const emptyText = useMemo(() =>
+            <div className="empty">No pokemons found</div>
+        , []);
+
+
     const handleSortDirectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSortDirection(e.target.value as 'asc' | 'desc');
     };
@@ -271,61 +284,65 @@ const PokemonTable = () => {
                 </select>
             </div>
 
-            {status === 'pending' ? (
-                <div className="loading">Loading Pokémon data...</div>
-            ) : status === 'error' ? (
-                <div className="error">Error loading Pokémon data</div>
-            ) : (
-                <div
-                    ref={tableContainerRef}
-                    className="table-container"
-                    style={{
-                        height: '600px',
-                        overflow: 'auto',
-                        position: 'relative'
-                    }}
-                >
-                    <table style={{width: '100%', tableLayout: 'fixed'}}>
-                        <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map(header => (
-                                    <th
-                                        key={header.id}
-                                        onClick={header.column.getToggleSortingHandler()}
-                                        style={{
-                                            cursor: 'pointer',
-                                            width: header.getSize() ? `${header.getSize()}px` : 'auto',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'nowrap',
-                                            flex: header.getSize() ? `0 0 ${header.getSize()}px` : '1 0 auto',
-                                            boxSizing: 'border-box',
-                                        }}
-                                    >
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                        {{
-                                            asc: ' 🔼',
-                                            desc: ' 🔽',
-                                        }[header.column.getIsSorted() as string] ?? null}
-                                    </th>
+            {status === 'pending' ? (loadingText)
+                : status === 'error' ? (errorText)
+                    : flatData.length === 0 ? (emptyText)
+                        : <div
+                            ref={tableContainerRef}
+                            className="table-container"
+                            style={{
+                                height: '600px',
+                                overflow: 'auto',
+                                position: 'relative'
+                            }}
+                        >
+                            <table
+                                style={{
+                                    width: '100%',
+                                    tableLayout: 'fixed',
+                                    borderCollapse: 'collapse',
+                                    border: 'none'
+                                }}>
+                                <thead>
+                                {table.getHeaderGroups().map(headerGroup => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map(header => (
+                                            <th
+                                                key={header.id}
+                                                onClick={header.column.getToggleSortingHandler()}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    width: header.getSize() ? `${header.getSize()}px` : 'auto',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                    flex: header.getSize() ? `0 0 ${header.getSize()}px` : '1 0 auto',
+                                                    boxSizing: 'border-box',
+                                                }}
+                                            >
+                                                {flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                                {{
+                                                    asc: ' 🔼',
+                                                    desc: ' 🔽',
+                                                }[header.column.getIsSorted() as string] ?? null}
+                                            </th>
+                                        ))}
+                                    </tr>
                                 ))}
-                            </tr>
-                        ))}
-                        </thead>
-                        <tbody style={{position: 'relative', height: `${virtualizer.getTotalSize()}px`}}>
-                        <VirtualRows/>
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody style={{position: 'relative', height: `${virtualizer.getTotalSize()}px`}}>
+                                <VirtualRows/>
+                                </tbody>
+                            </table>
 
-                    {isFetchingNextPage && (
-                        <div className="loading-more">Loading more Pokémon...</div>
-                    )}
-                </div>
-            )}
+                            {isFetchingNextPage && (
+                                <div className="loading-more">Loading more Pokémon...</div>
+                            )}
+                        </div>
+            }
         </div>
     );
 };

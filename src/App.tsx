@@ -1,5 +1,5 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import PokemonTable from './components/PokemonTable';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import Main from './pages/Main';
 import './App.css';
 
 const queryClient = new QueryClient({
@@ -13,19 +13,13 @@ const queryClient = new QueryClient({
 
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <div className="app">
-                <header className="header">
-                    <h1>Pokémon Database</h1>
-                </header>
-                <main className="main">
-                    <PokemonTable />
-                </main>
-                <footer className="footer">
-                    <p>Data provided by Pokémon API</p>
-                </footer>
-            </div>
-        </QueryClientProvider>
+        <div className="app">
+            <QueryClientProvider client={queryClient}>
+                <div className="page-container">
+                    <Main/>
+                </div>
+            </QueryClientProvider>
+        </div>
     );
 }
 
