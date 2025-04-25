@@ -1,5 +1,5 @@
 import React from 'react';
-import PokemonTable from "../components/PokemonTable.tsx";
+import PokemonTable from "../components/pokemon/PokemonTable";
 import ThemeToggle from "../components/ThemeToggle";
 
 const Main: React.FC = () => {
