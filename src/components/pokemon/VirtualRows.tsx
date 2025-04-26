@@ -11,9 +11,10 @@ interface VirtualRowsProps {
     rows: Row<Pokemon>[];
     imgErrors: ImgErrorsState;
     onImageError: (pokemonId: number) => void;
+    onRowClick?: (pokemon: Pokemon) => void;
 }
 
-const VirtualRows = ({virtualizer, rows, imgErrors, onImageError}: VirtualRowsProps) => {
+const VirtualRows = ({virtualizer, rows, imgErrors, onImageError, onRowClick}: VirtualRowsProps) => {
     const items = virtualizer.getVirtualItems();
 
     const cellWrapper = useCallback((cell: Cell<Pokemon, unknown>, element: React.ReactNode) => (
@@ -42,7 +43,9 @@ const VirtualRows = ({virtualizer, rows, imgErrors, onImageError}: VirtualRowsPr
                         style={{
                             height: `${virtualRow.size}px`,
                             transform: `translateY(${virtualRow.start}px)`,
+                            cursor: onRowClick ? 'pointer' : 'default',
                         }}
+                        onClick={() => onRowClick && onRowClick(row.original)}
                     >
                         {row.getVisibleCells().map(cell => {
                             // Special handling for icon column

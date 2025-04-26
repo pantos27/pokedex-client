@@ -1,14 +1,19 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { usePokemonData } from '../../hooks/usePokemonData';
 import { usePokemonTable } from '../../hooks/usePokemonTable';
 import { useVirtualTable } from '../../hooks/useVirtualTable';
+import { Pokemon } from '../../types/pokemon';
 import PokemonFilters from './PokemonFilters';
 import PokemonTableHeader from './PokemonTableHeader';
 import VirtualRows from './VirtualRows';
 import StatusMessages from './StatusMessages';
+import PokemonModal from './PokemonModal';
 import '../../styles/PokemonTable.css';
 
 const PokemonTable = () => {
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     filter,
     setFilter,
@@ -34,6 +39,15 @@ const PokemonTable = () => {
 
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
+  };
+
+  const handleRowClick = (pokemon: Pokemon) => {
+    setSelectedPokemon(pokemon);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
 
@@ -66,6 +80,7 @@ const PokemonTable = () => {
                 rows={table.getRowModel().rows}
                 imgErrors={imgErrors}
                 onImageError={handleImageError}
+                onRowClick={handleRowClick}
               />
             </tbody>
           </table>
@@ -75,6 +90,12 @@ const PokemonTable = () => {
           )}
         </div>
       )}
+
+      <PokemonModal
+        pokemon={selectedPokemon}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
