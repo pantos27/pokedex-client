@@ -36,17 +36,12 @@ const PokemonTable = () => {
     setFilter(e.target.value);
   };
 
-  const handleSortDirectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSortDirection(e.target.value as 'asc' | 'desc');
-  };
 
   return (
     <div className="pokemon-table-container">
       <PokemonFilters
         filter={filter}
-        sortDirection={sortDirection}
         onFilterChange={handleFilterChange}
-        onSortDirectionChange={handleSortDirectionChange}
       />
 
       {status !== 'success' || flatData.length === 0 ? (
@@ -60,7 +55,11 @@ const PokemonTable = () => {
           className="table-container"
         >
           <table className="pokemon-table">
-            <PokemonTableHeader headerGroups={table.getHeaderGroups()} />
+            <PokemonTableHeader
+              headerGroups={table.getHeaderGroups()}
+              sortDirection={sortDirection}
+              setSortDirection={setSortDirection}
+            />
             <tbody style={{ position: 'relative', height: `${virtualizer.getTotalSize()}px` }}>
               <VirtualRows
                 virtualizer={virtualizer}
