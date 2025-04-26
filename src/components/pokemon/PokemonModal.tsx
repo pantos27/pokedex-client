@@ -1,16 +1,55 @@
 import React from 'react';
 import { Pokemon } from '../../types/pokemon';
 import { ICON_PLACEHOLDER } from '../../constants';
+import { usePokemonCapture } from '../../hooks/usePokemonCapture';
+import CheckmarkIcon from '../../assets/CheckmarkIcon';
+import ErrorIcon from '../../assets/ErrorIcon';
 import '../../styles/PokemonModal.css';
 
 interface PokemonModalProps {
-  pokemon: Pokemon | null;
+  pokemon: Pokemon;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, isOpen, onClose }) => {
-  if (!isOpen || !pokemon) return null;
+  const { captureStatus, isCapturing, handleCapture } = usePokemonCapture(pokemon.id);
+
+  if (!isOpen) return null;
+
+  const renderCaptureButton = () => {
+    if (captureStatus === 'loading' || isCapturing) {
+      return (
+        <button className="capture-button" disabled>
+          <div className="capture-spinner"></div>
+        </button>
+      );
+    }
+
+    if (captureStatus === 'success') {
+      return (
+        <button className="capture-button capture-success" disabled>
+          <CheckmarkIcon />
+          Captured!
+        </button>
+      );
+    }
+
+    if (captureStatus === 'error') {
+      return (
+        <button className="capture-button capture-error" disabled>
+          <ErrorIcon />
+          Failed!
+        </button>
+      );
+    }
+
+    return (
+      <button className="capture-button" onClick={handleCapture}>
+        Capture
+      </button>
+    );
+  };
 
   return (
     <div className="pokemon-modal-overlay" onClick={onClose}>
@@ -74,6 +113,10 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, isOpen, onClose })
                   <span className="stat-value">{pokemon.total}</span>
                 </div>
               </div>
+            </div>
+
+            <div className="capture-button-container">
+              {renderCaptureButton()}
             </div>
           </div>
         </div>
