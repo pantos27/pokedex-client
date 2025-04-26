@@ -10,7 +10,7 @@ export interface UserRegistrationResponse {
   captured_pokemon: string[];
 }
 
-const USER_API_URL = 'http://localhost:8080/api/users';
+const USER_API_URL = '/api/users';
 
 export const useUserApi = () => {
   const { useApiMutation } = useApi();

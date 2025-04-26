@@ -11,7 +11,7 @@ export interface PokemonQueryParams {
     sortOrder?: 'asc' | 'desc';
 }
 
-const POKEMON_API_URL = 'http://localhost:8080/api/pokemon/search';
+const POKEMON_API_URL = '/api/pokemon/search';
 
 // Helper function to build the Pokemon API URL
 const buildPokemonUrl = ({
@@ -60,4 +60,3 @@ export const useFetchPokemonInfinite = (name: string = '', sortOrder: 'asc' | 'd
             lastPage.meta.has_next ? lastPage.meta.next_page : undefined,
     });
 };
-
