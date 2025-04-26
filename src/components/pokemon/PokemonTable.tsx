@@ -1,7 +1,8 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { usePokemonData } from '../../hooks/usePokemonData';
 import { usePokemonTable } from '../../hooks/usePokemonTable';
 import { useVirtualTable } from '../../hooks/useVirtualTable';
+import { useDebounce } from '../../hooks/useDebounce';
 import { Pokemon } from '../../types/pokemon';
 import PokemonFilters from './PokemonFilters';
 import PokemonTableHeader from './PokemonTableHeader';
@@ -13,10 +14,12 @@ import '../../styles/PokemonTable.css';
 const PokemonTable = () => {
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const {
-    filter,
     setFilter,
+    typeFilter,
+    setTypeFilter,
     sortDirection,
     setSortDirection,
     flatData,
@@ -25,7 +28,12 @@ const PokemonTable = () => {
     isFetching,
     isFetchingNextPage,
     status,
+    types,
+    isLoadingTypes,
   } = usePokemonData();
+
+  // Debounce the input value
+  const debouncedInputValue = useDebounce(inputValue, 300);
 
   const { table, imgErrors, handleImageError } = usePokemonTable(flatData);
 
@@ -38,7 +46,22 @@ const PokemonTable = () => {
   });
 
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilter(e.target.value);
+    setInputValue(e.target.value);
+  };
+
+  // Update the filter when the debounced input value changes
+  useEffect(() => {
+    setFilter(debouncedInputValue);
+  }, [debouncedInputValue, setFilter]);
+
+  const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setTypeFilter(e.target.value);
+  };
+
+  const handleClearFilters = () => {
+    setInputValue('');
+    setFilter('');
+    setTypeFilter('');
   };
 
   const handleRowClick = (pokemon: Pokemon) => {
@@ -54,8 +77,13 @@ const PokemonTable = () => {
   return (
     <div className="pokemon-table-container">
       <PokemonFilters
-        filter={filter}
+        filter={inputValue}
         onFilterChange={handleFilterChange}
+        typeFilter={typeFilter}
+        onTypeFilterChange={handleTypeFilterChange}
+        types={types}
+        isLoadingTypes={isLoadingTypes}
+        onClearFilters={handleClearFilters}
       />
 
       {status !== 'success' || flatData.length === 0 ? (

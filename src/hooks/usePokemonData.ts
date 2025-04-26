@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react';
-import { useFetchPokemonInfinite } from '../api/usePokemonApi';
+import { useFetchPokemonInfinite, useFetchPokemonTypes } from '../api/usePokemonApi';
 
 export const usePokemonData = () => {
     const [filter, setFilter] = useState('');
+    const [typeFilter, setTypeFilter] = useState('');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     const {
@@ -12,7 +13,9 @@ export const usePokemonData = () => {
         isFetching,
         isFetchingNextPage,
         status,
-    } = useFetchPokemonInfinite(filter, sortDirection);
+    } = useFetchPokemonInfinite(filter, typeFilter, sortDirection);
+
+    const { data: types, isLoading: isLoadingTypes } = useFetchPokemonTypes();
 
     const flatData = useMemo(() =>
         data?.pages.flatMap(page => page.items) ?? [],
@@ -22,6 +25,8 @@ export const usePokemonData = () => {
     return {
         filter,
         setFilter,
+        typeFilter,
+        setTypeFilter,
         sortDirection,
         setSortDirection,
         data,
@@ -31,5 +36,7 @@ export const usePokemonData = () => {
         isFetching,
         isFetchingNextPage,
         status,
+        types,
+        isLoadingTypes,
     };
 };
