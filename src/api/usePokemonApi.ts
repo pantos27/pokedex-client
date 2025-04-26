@@ -1,8 +1,8 @@
-import { Pokemon } from '../types/pokemon';
-import { PagedResponse } from "../types/paging";
-import { useApi } from './useApi';
-import { createApiHeaders } from './apiUtils';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import {Pokemon} from '../types/pokemon';
+import {PagedResponse} from "../types/paging";
+import {useApi} from './useApi';
+import {createApiHeaders} from './apiUtils';
+import {useInfiniteQuery} from '@tanstack/react-query';
 
 export interface PokemonQueryParams {
     pageParam?: number;
@@ -29,8 +29,7 @@ const fetchPokemon = async (params: PokemonQueryParams): Promise<PagedResponse<P
     const response = await fetch(url, {
         headers: createApiHeaders()
     });
-    const data = await response.json();
-    return data[0];
+    return await response.json();
 };
 
 // Custom hook for fetching Pokemon data with regular query
