@@ -14,9 +14,9 @@ import '../../styles/PokemonTable.css';
 const PokemonTable = () => {
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
 
   const {
+    textFilter,
     setTextFilter,
     typeFilter,
     setTypeFilter,
@@ -31,6 +31,13 @@ const PokemonTable = () => {
     types,
     isLoadingTypes,
   } = usePokemonData();
+
+  const [inputValue, setInputValue] = useState(textFilter);
+
+  // Initialize inputValue from textFilter when it changes (e.g., from URL params)
+  useEffect(() => {
+    setInputValue(textFilter);
+  }, [textFilter]);
 
   // Debounce the input value
   const debouncedInputValue = useDebounce(inputValue, 300);

@@ -1,10 +1,17 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useFetchPokemonInfinite, useFetchPokemonTypes } from '../api/usePokemonApi';
+import {getUrlParams, updateUrlParams} from "../utils/urlUtils.ts";
 
 export const usePokemonData = () => {
-    const [textFilter, setTextFilter] = useState('');
-    const [typeFilter, setTypeFilter] = useState('');
-    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+    // Initialize state from URL parameters
+    const urlParams = getUrlParams();
+    const [textFilter, setTextFilter] = useState(urlParams.text);
+    const [typeFilter, setTypeFilter] = useState(urlParams.type);
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(urlParams.sort);
+
+    useEffect(() => {
+        updateUrlParams(textFilter, typeFilter, sortDirection);
+    }, [textFilter, typeFilter, sortDirection]);
 
     const {
         data,

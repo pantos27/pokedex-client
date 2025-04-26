@@ -50,15 +50,15 @@ export const useFetchPokemon = (params: PokemonQueryParams = {}) => {
 
 // Custom hook for fetching Pokemon data with infinite query
 export const useFetchPokemonInfinite =
-    (name: string = '', type: string = '', sortOrder: 'asc' | 'desc' = 'asc', perPage: number = 20) => {
+    (textFilter: string = '', typeFilter: string = '', sortDirection: 'asc' | 'desc' = 'asc', perPage: number = 20) => {
     return useInfiniteQuery({
-        queryKey: ['pokemon', name, type, sortOrder],
+        queryKey: ['pokemon', textFilter, typeFilter, sortDirection],
         queryFn: ({pageParam}) =>
             fetchPokemon({
                 pageParam,
-                name,
-                type,
-                sortOrder,
+                name: textFilter,
+                type: typeFilter,
+                sortOrder: sortDirection,
                 perPage
             }),
         initialPageParam: 1,
