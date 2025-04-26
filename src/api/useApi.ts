@@ -4,6 +4,7 @@ import { createApiHeaders } from './apiUtils';
 interface ApiOptions {
   headers?: HeadersInit;
   queryKey?: string[];
+  enabled?: boolean;
 }
 
 export const useApi = () => {
@@ -37,6 +38,7 @@ export const useApi = () => {
     return useQuery<T>({
       queryKey,
       queryFn: () => fetchData<T>(url, options),
+      enabled: options?.enabled
     });
   };
 

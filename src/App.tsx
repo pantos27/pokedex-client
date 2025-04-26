@@ -19,15 +19,15 @@ function App() {
     return (
         <div className="app">
             <ThemeProvider>
-                <AuthProvider>
                     <QueryClientProvider client={queryClient}>
-                        <AuthenticatedContent>
-                            <div className="page-container">
-                                <Main />
-                            </div>
-                        </AuthenticatedContent>
+                        <AuthProvider>
+                            <AuthenticatedContent>
+                                <div className="page-container">
+                                    <Main />
+                                </div>
+                            </AuthenticatedContent>
+                        </AuthProvider>
                     </QueryClientProvider>
-                </AuthProvider>
             </ThemeProvider>
         </div>
     );
