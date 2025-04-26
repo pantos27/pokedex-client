@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 interface PokemonFiltersProps {
-  filter: string;
+  textFilter: string;
   onFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
   typeFilter: string;
   onTypeFilterChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -11,7 +11,7 @@ interface PokemonFiltersProps {
 }
 
 const PokemonFilters = ({
-  filter,
+  textFilter,
   onFilterChange,
   typeFilter,
   onTypeFilterChange,
@@ -25,7 +25,7 @@ const PokemonFilters = ({
         <input
           type="text"
           placeholder="Filter by name..."
-          value={filter}
+          value={textFilter}
           onChange={onFilterChange}
           className="filter-input"
         />
@@ -41,7 +41,7 @@ const PokemonFilters = ({
           ))}
         </select>
       </div>
-      {(filter || typeFilter) && (
+      {(textFilter || typeFilter) && (
         <button
           onClick={onClearFilters}
           className="clear-filters-button"

@@ -17,7 +17,7 @@ const PokemonTable = () => {
   const [inputValue, setInputValue] = useState('');
 
   const {
-    setFilter,
+    setTextFilter,
     typeFilter,
     setTypeFilter,
     sortDirection,
@@ -51,8 +51,8 @@ const PokemonTable = () => {
 
   // Update the filter when the debounced input value changes
   useEffect(() => {
-    setFilter(debouncedInputValue);
-  }, [debouncedInputValue, setFilter]);
+    setTextFilter(debouncedInputValue);
+  }, [debouncedInputValue, setTextFilter]);
 
   const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTypeFilter(e.target.value);
@@ -60,7 +60,7 @@ const PokemonTable = () => {
 
   const handleClearFilters = () => {
     setInputValue('');
-    setFilter('');
+    setTextFilter('');
     setTypeFilter('');
   };
 
@@ -77,7 +77,7 @@ const PokemonTable = () => {
   return (
     <div className="pokemon-table-container">
       <PokemonFilters
-        filter={inputValue}
+        textFilter={inputValue}
         onFilterChange={handleFilterChange}
         typeFilter={typeFilter}
         onTypeFilterChange={handleTypeFilterChange}
