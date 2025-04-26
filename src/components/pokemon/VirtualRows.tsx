@@ -69,6 +69,18 @@ const VirtualRows = ({virtualizer, rows, imgErrors, onImageError}: VirtualRowsPr
                                 ));
                             }
 
+                            // Special handling for name column to show legendary indicator
+                            if (cell.column.id === 'name') {
+                                return cellWrapper(cell, (
+                                    <div>
+                                        {cell.getValue() as string}
+                                        {row.original.legendary && (
+                                            <span className="legendary-indicator" title="Legendary Pokémon">⭐</span>
+                                        )}
+                                    </div>
+                                ));
+                            }
+
                             // Default rendering for other columns
                             return cellWrapper(cell, flexRender(cell.column.columnDef.cell, cell.getContext()))
                         })}

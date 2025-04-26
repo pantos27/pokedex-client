@@ -67,3 +67,11 @@
   padding: 1rem;
   text-align: center;
 }
+
+.legendary-indicator {
+  margin-left: 8px;
+  color: gold;
+  font-size: 1.2em;
+  vertical-align: middle;
+  display: inline-block;
+}
