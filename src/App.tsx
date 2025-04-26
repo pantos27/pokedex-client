@@ -1,6 +1,8 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import Main from './pages/Main';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthProvider';
+import { AuthenticatedContent } from './components/auth/AuthenticatedContent';
 import './App.css';
 import './styles/theme.css';
 
@@ -17,11 +19,15 @@ function App() {
     return (
         <div className="app">
             <ThemeProvider>
-                <QueryClientProvider client={queryClient}>
-                    <div className="page-container">
-                        <Main/>
-                    </div>
-                </QueryClientProvider>
+                <AuthProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <AuthenticatedContent>
+                            <div className="page-container">
+                                <Main />
+                            </div>
+                        </AuthenticatedContent>
+                    </QueryClientProvider>
+                </AuthProvider>
             </ThemeProvider>
         </div>
     );

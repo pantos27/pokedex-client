@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchPokemon } from '../api/pokemonApi';
+import { useFetchPokemonInfinite } from '../api/usePokemonApi';
 
 export const usePokemonData = () => {
     const [filter, setFilter] = useState('');
@@ -13,18 +12,7 @@ export const usePokemonData = () => {
         isFetching,
         isFetchingNextPage,
         status,
-    } = useInfiniteQuery({
-        queryKey: ['pokemon', filter, sortDirection],
-        queryFn: ({pageParam}) =>
-            fetchPokemon({
-                pageParam,
-                name: filter,
-                sortOrder: sortDirection
-            }),
-        initialPageParam: 1,
-        getNextPageParam: (lastPage) =>
-            lastPage.meta.has_next ? lastPage.meta.next_page : undefined,
-    });
+    } = useFetchPokemonInfinite(filter, sortDirection);
 
     const flatData = useMemo(() =>
         data?.pages.flatMap(page => page.items) ?? [],
