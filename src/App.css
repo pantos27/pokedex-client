@@ -7,13 +7,12 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #f5f5f5;
+  /* Theme colors applied in theme.css */
 }
 
 .app {
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spacing-lg);
   height: 100%;
   width: 100%;
 }
@@ -31,56 +30,29 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-bottom: 30px;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.header h1 {
-  color: #e53935;
-}
+/* Header h1 styling in theme.css */
 
 .main {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-lg);
+  background-color: var(--main-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow);
 }
 
 .footer {
   text-align: center;
-  margin-top: 30px;
-  padding: 20px 0;
-  color: #777;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
-.pokemon-table-container {
-  width: 100%;
-}
-
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.filter-input, .sort-select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.filter-input {
-  flex-grow: 1;
-}
-
-.table-container {
-  border: 1px solid #eee;
-  border-radius: 4px;
-}
-
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -88,8 +60,8 @@ table {
 }
 
 th, td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -97,26 +69,23 @@ th, td {
 }
 
 th {
-  background-color: #f9f9f9;
   font-weight: bold;
   position: sticky;
   top: 0;
   z-index: 10;
+  /* Background color in theme.css */
 }
 
-tr:hover {
-  background-color: #f5f5f5;
-}
-
+/* Status messages */
 .loading, .error, .loading-more, .empty {
   text-align: center;
-  padding: 20px;
+  padding: var(--spacing-lg);
 }
 
 .loading, .loading-more {
-  color: #777;
+  color: var(--text-muted);
 }
 
 .error, .empty {
-  color: #e53935;
+  color: var(--text-error);
 }
