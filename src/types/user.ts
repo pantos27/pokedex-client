@@ -4,7 +4,7 @@ export interface User {
     capturedPokemon: Capture[];
 }
 
-interface Capture {
-    date_created: Date;
+export interface Capture {
+    date_created: string;
     pokemon_id: number;
 }

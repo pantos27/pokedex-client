@@ -5,7 +5,7 @@ export interface CaptureRequest {
 }
 
 export interface CaptureResponse {
-  date_created: Date;
+  date_created: string;
   pokemon_id: number;
 }
 

@@ -1,17 +1,20 @@
 import {useEffect, useState} from 'react';
 import { useCapturePokemonApi } from '../api/useCaptureApi';
 import {useAuth} from "../context/useAuth.ts";
-import {User} from "../types/user.ts";
+import {Capture, User} from "../types/user.ts";
 
 export type CaptureStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export const usePokemonCapture = (pokemonId: number) => {
   const [captureStatus, setCaptureStatus] = useState<CaptureStatus>('idle');
+  const [capture, setCapture] = useState<Capture|undefined>();
   const { capturePokemon, isCapturing } = useCapturePokemonApi();
   const { user, setUser } = useAuth();
 
   useEffect(() => {
-    if (user?.capturedPokemon?.find((cap)=>cap.pokemon_id===pokemonId) !== undefined){
+    const capture = user?.capturedPokemon?.find((cap)=>cap.pokemon_id===pokemonId);
+    setCapture(capture);
+    if (capture !== undefined){
       setCaptureStatus('success');
     }else{
       setCaptureStatus('idle');
@@ -43,6 +46,7 @@ export const usePokemonCapture = (pokemonId: number) => {
   };
 
   return {
+    capture,
     captureStatus,
     isCapturing,
     handleCapture,
