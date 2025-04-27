@@ -5,8 +5,8 @@ export interface CaptureRequest {
 }
 
 export interface CaptureResponse {
-  success: boolean;
-  message?: string;
+  date_created: Date;
+  pokemon_id: number;
 }
 
 const POKEMON_API_URL = '/api/captures';

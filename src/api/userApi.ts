@@ -1,19 +1,14 @@
 import { useApi } from './useApi';
+import {CaptureResponse} from "./useCaptureApi.ts";
 
 export interface UserRegistrationRequest {
   user_name: string;
 }
 
-export interface UserRegistrationResponse {
-  id: string;
-  user_name: string;
-  captured_pokemon: string[];
-}
-
 export interface UserResponse {
   id: string;
   user_name: string;
-  captured_pokemon: string[];
+  captured_pokemon: CaptureResponse[];
 }
 
 const USER_API_URL = '/api/users';
@@ -32,7 +27,7 @@ export const useUserApi = () => {
   const { useApiMutation } = useApi();
 
   // Registration mutation
-  const registerUser = useApiMutation<UserRegistrationResponse, UserRegistrationRequest>();
+  const registerUser = useApiMutation<UserResponse, UserRegistrationRequest>();
 
   const registerUserFn = (data: UserRegistrationRequest) => {
     return registerUser.mutateAsync({
