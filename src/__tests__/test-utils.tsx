@@ -5,6 +5,7 @@ import { ThemeProvider } from '../context/ThemeContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Create a custom render function that includes all providers
+// eslint-disable-next-line react-refresh/only-export-components
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,8 +36,8 @@ export const mockUser = {
   id: 'user-123',
   username: 'testuser',
   capturedPokemon: [
-    { pokemon_id: 1, date_created: new Date('2023-01-01T00:00:00Z') },
-    { pokemon_id: 4, date_created: new Date('2023-01-02T00:00:00Z') },
+    { pokemon_id: 1, date_created: '2023-01-01T00:00:00Z' },
+    { pokemon_id: 4, date_created: '2023-01-02T00:00:00Z' },
   ],
 };
 

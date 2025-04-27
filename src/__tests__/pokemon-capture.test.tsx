@@ -142,7 +142,7 @@ describe('Pokemon Capture', () => {
             ...mockUser,
             capturedPokemon: [
                 ...mockUser.capturedPokemon,
-                {pokemon_id: 10, date_created: new Date('2023-01-03T00:00:00Z')}
+                {pokemon_id: 10, date_created: '2023-01-03T00:00:00Z'}
             ]
         };
 
