@@ -2,6 +2,8 @@
 
 A React application for browsing and capturing Pokemon. Built with React, TypeScript, and Vite.
 
+See server project [here](https://github.com/pantos27/pokedex-server)
+
 ## Features
 
 - User registration and authentication
